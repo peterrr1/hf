@@ -4,6 +4,7 @@
 #include <fstream>
 #include "lancoltLista.h"
 
+
 class File {
 public:
 	//egy .txt fajlbol beolvassa az adatokat a lancolt listaba

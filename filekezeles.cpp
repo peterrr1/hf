@@ -1,25 +1,35 @@
 #include "filekezeles.h"
-
+#include <sstream>
 
 void File::fileBeolvas(Lista& lista) {
 	std::fstream file;
 
-	file.open("telefonkonyv.txt", std::ios::out);
-	if (!file){
+	file.open("telefonkonyv.txt", std::ios::in);
+	if (!file) {
 		throw std::runtime_error("\nHiba a fajl megnyitasa kozben!\n");
 	}
 	else {
-		std::string nev, becenev, lakcim, email, munka, privat;
-		char c;
-		while (!file.eof()) {
-			file >> nev >> c >> becenev >> c >> lakcim >> email >> c >> munka >> c >> privat;
-			Adatok ujAdat(nev, becenev, lakcim, email, munka, privat);
+		std::string sor;
+		while (std::getline(file, sor)) {
+
+			std::istringstream ss(sor);
+
+			std::string tmpNev, tmpBecNev, tmpCim, tmpEmail, tmpMSzam, tmpPSzam;
+
+			std::getline(ss,tmpNev, ':');
+			std::getline(ss, tmpBecNev, ':');
+			std::getline(ss, tmpCim, ':');
+			std::getline(ss, tmpEmail, ':');
+			std::getline(ss, tmpMSzam, ':');
+			std::getline(ss, tmpPSzam, ':');
+
+			Adatok ujAdat(tmpNev, tmpBecNev, tmpCim, tmpEmail, tmpMSzam, tmpPSzam);
+
 			lista.hozzaad(ujAdat);
 		}
-		file.close();
 	}
+	file.close();
 }
-
 
 void File::fileKiir(Lista& lista) {
 	std::fstream file;

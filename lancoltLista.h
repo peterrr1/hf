@@ -3,6 +3,7 @@
 
 #include "adatok.h"
 
+
 class Lista {
 	struct Elem {
 		Adatok adat;

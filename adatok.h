@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+
 class Adatok {
 	std::string Nev;
 	std::string Becenev;

@@ -56,7 +56,7 @@ void Lista::torles(std::string torlendoSzam) {
 			std::cin.ignore();
 
 			if (megerosites == 'i' || megerosites == 'I') {
-				if (elso = tmp) {
+				if (elso == tmp) {
 					elso = tmp->kov;
 					delete tmp;
 				}
@@ -73,8 +73,7 @@ void Lista::torles(std::string torlendoSzam) {
 				break;
 			}
 			else {
-				std::cout << "\nHibas formatum.\n" << std::endl;
-				break;
+				throw std::runtime_error("\nHibas formatum.\n");
  			}
 		}
 		elozo = tmp;
@@ -128,6 +127,65 @@ void Lista::szamKeres(std::string keresettSzam) const {
 
 	if (!benne_van){
 		std::cout << "\nNem talalhato szemely a megadott telefonszammal.\n" << std::endl;
+	}
+}
+
+void Lista::modosit(std::string telefonszam) {
+
+	bool benne_van = false;
+	Elem *elozo = NULL;
+	Elem* tmp = elso;
+	while (tmp != NULL) {
+		if (telefonszam == tmp->adat.getMunkahelyi() || telefonszam == tmp->adat.getPrivat()){
+			benne_van = true;
+			std::cout << "Modositando bejegyzes: " << std::endl;
+			std::cout << "\nNev: " << tmp->adat.getNev() << '\n' <<
+			"Becenev: " << tmp->adat.getBecenev() << '\n' <<
+			"Lakcim: " << tmp->adat.getLakcim() << '\n' <<
+			"Email: " << tmp->adat.getEmail() << '\n' <<
+			"Munkahelyi telefonszam: " << tmp->adat.getMunkahelyi() << '\n' <<
+			"Privat telefonszam: " << tmp->adat.getPrivat() << std::endl;
+
+			std::cout << "Adja meg az uj adatokat: ";
+			std::string UjNev, UjBecenev, UjLakcim, UjEmail, UjMunkahelyi, UjPrivat;
+
+			std::cout << "Nev: ";
+			std::getline(std::cin, UjNev);
+
+			std::cout << "Becenev: ";
+			std::getline(std::cin, UjBecenev);
+
+			std::cout << "Lakcim: ";
+			std::getline(std::cin, UjLakcim);
+
+			std::cout << "Email: ";
+			std::getline(std::cin, UjEmail);
+
+			std::cout << "Munkahelyi szam: ";
+			std::getline(std::cin, UjMunkahelyi);
+
+			std::cout << "Privat szam: ";
+			std::getline(std::cin, UjPrivat);
+
+			Adatok ujAdat(UjNev, UjBecenev, UjLakcim, UjEmail, UjMunkahelyi, UjPrivat);
+
+			Elem *ujElem = new Elem(ujAdat);
+
+			if (elso == tmp){
+				ujElem->kov = tmp->kov;
+				elso = ujElem;
+				delete tmp;
+			}
+			else {
+				ujElem->kov = tmp->kov;
+				elozo->kov = ujElem;
+				delete tmp;
+			}
+
+			break;
+		}
+		elozo = tmp;
+		tmp = tmp->kov;
 	}
 }
 
